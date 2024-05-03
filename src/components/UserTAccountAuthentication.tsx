@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet, Text, Pressable} from 'react-native';
 import {makeRedirectUri, useAuthRequest} from 'expo-auth-session';
 import * as WebBrowser from 'expo-web-browser';
-import Logo from '../assets/LogoCHSHW';
+import Logo from '../assets/LogoChsh';
 
 
 WebBrowser.maybeCompleteAuthSession().message;
@@ -71,35 +71,3 @@ const styles = StyleSheet.create({
     marginLeft: 10
   },
 });
-
-
-  //   <View style={styles.container}>
-    
-  //   <StatusBar style="auto" />
-
-  // <Image source={Logo}>
-
-  //   </Image>
-
-  //   <View style={styles.button}>
-  //     <Button
-  //       title="Open URL with an in-app browser"
-  //       onPress={() => {promptAsync();}}
-  //     />
-  //   </View>
-
-  //   <View style={styles.button}>
-  //     <Button
-  //       title="callbackUrl"
-  //       onPress={() => {console.log(redirectUri)}}
-  //     />
-  //   </View>
-
-  //   <View style={styles.button}>
-  //     <Button
-  //       title="response"
-  //       onPress={() => {console.log(response)}}
-  //     />
-  //   </View>
-
-  // </View>
