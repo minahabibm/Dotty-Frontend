@@ -2,21 +2,18 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
 import { NavigationContainer } from '@react-navigation/native';
-// import UserTAccountAuthentication from './src/components/UserTAccountAuthentication';
+import NavigationStack from './src/navigation';
 
-WebBrowser.maybeCompleteAuthSession().message;
+WebBrowser.maybeCompleteAuthSession();
 
 export default function App() {
 
   return (
     <NavigationContainer>
-      <View style={styles.container}>
-    
-      <Text>Open up App.tsx to start working on your app!</Text>
-      
-      {/* <UserTAccountAuthentication/> */}
-
-      </View>
+      {/* <View style={styles.container}>
+        <Text>Open up App.tsx to start working on your app!</Text>
+      </View> */}
+      <NavigationStack />
     </NavigationContainer>
   );
 }
