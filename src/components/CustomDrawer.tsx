@@ -13,7 +13,7 @@ import {
 import { DrawerContentScrollView, DrawerItemList } from "@react-navigation/drawer";
 import Ionicons from "@expo/vector-icons/Ionicons";
   
-const CustomDrawer = (props: any) => {
+export default function CustomDrawer(props: any) {
   return (
     <View style={{ flex: 1 }}>
       <DrawerContentScrollView
@@ -82,7 +82,7 @@ const CustomDrawer = (props: any) => {
   );
 };
 
-export default CustomDrawer;
+
 
 const styles = StyleSheet.create({
   contentContainerStyle: {
