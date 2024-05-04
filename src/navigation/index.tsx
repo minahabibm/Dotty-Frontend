@@ -13,7 +13,7 @@ const Stack = createDrawerNavigator();
 function NavigationStack() {
   return (
       <Stack.Navigator 
-        // drawerContent={(props) => <CustomDrawer {...props} />}
+        drawerContent={(props) => <CustomDrawer {...props} />}
         initialRouteName="Home"
         >
           <Stack.Screen name="Home" component={HomeScreen} />

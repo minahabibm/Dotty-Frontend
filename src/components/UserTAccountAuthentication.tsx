@@ -8,29 +8,22 @@ import Logo from '../assets/LogoChsh';
 WebBrowser.maybeCompleteAuthSession().message;
 
 export default function App() {
+  const authorization_endpoint = process.env.CHSH_AUTHORIZATION_ENDPOINT as string;
+  const client_id = process.env.CHSH_AUTHORIZATION_KEY as string;
+  const redirect_uri = process.env.CHSH_AUTHORIZATION_REDIRECT_URI as string;
   const title = "Sign In";
-  
-  const discovery = {
-    authorizationEndpoint: 'https://api.schwabapi.com/v1/oauth/authorize',
-  };
 
+  const discovery = { authorizationEndpoint: authorization_endpoint};
   const redirectUri = makeRedirectUri();
   // const redirectUri = makeRedirectUri({
-  //   scheme: '',
-  //   path: '/api'
+  //   scheme: 'https://127.0.0.1',
+  //   // path: '/api'
   // });
-
-  const [request, response, promptAsync] = useAuthRequest(
-    {
-      clientId: "",
-      redirectUri: "https://127.0.0.1",
-    },
-    discovery
-  );
-
+  const [request, response, promptAsync] = useAuthRequest({ clientId: client_id, redirectUri: redirect_uri }, discovery);
 
   React.useEffect(() => {
     console.log(response)
+    console.log(redirectUri + " " + redirect_uri)
     if (response?.type === 'success') {
       const { code } = response.params;
     }
