@@ -15,11 +15,11 @@ export default function App() {
 
   const discovery = { authorizationEndpoint: authorization_endpoint};
   const redirectUri = makeRedirectUri();
-  // const redirectUri = makeRedirectUri({
-  //   scheme: 'https://127.0.0.1',
-  //   // path: '/api'
-  // });
-  const [request, response, promptAsync] = useAuthRequest({ clientId: client_id, redirectUri: redirect_uri }, discovery);
+  const [request, response, promptAsync] = useAuthRequest({ 
+    clientId: client_id, 
+    redirectUri: redirect_uri,
+    usePKCE: true
+  }, discovery);
 
   React.useEffect(() => {
     console.log(response)

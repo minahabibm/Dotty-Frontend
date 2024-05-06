@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
+import GoogleSingIn from '../components/GoogleSignIn';
 import UserTAccountAuthentication from '../components/UserTAccountAuthentication';
 
 WebBrowser.maybeCompleteAuthSession();
@@ -10,6 +11,7 @@ export default function HomeScreen() {
   return (
     <View style={styles.container}>
         <Text>Dotty!</Text>     
+        <GoogleSingIn></GoogleSingIn>
         <UserTAccountAuthentication/>
     </View>
   );
