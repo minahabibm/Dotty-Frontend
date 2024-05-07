@@ -40,3 +40,7 @@ assets/logoCHSHW.svg
 .expo
 dist/
 web-build/
+
+android/
+ios/
+/assets/signin-assets

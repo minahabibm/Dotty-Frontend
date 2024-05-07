@@ -16,7 +16,14 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.anonymous.dotty-app"
+      "bundleIdentifier": "com.anonymous.dotty-app",
+      "infoPlist": {
+        "CFBundleURLTypes": [
+          {
+            "CFBundleURLSchemes": ["com.googleusercontent.apps.162286306085-l4sjg8lnq993qbonch9o5ltppelip65j"]
+          }
+        ]
+      }
     },
     "android": {
       "adaptiveIcon": {
