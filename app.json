@@ -29,6 +29,16 @@
       "favicon": "./assets/favicon.png",
       "bundler": "metro"
     },
-    "scheme": "dotty"
+    "scheme": "dotty",
+    "expo": {
+      "plugins": [
+        [
+          "@react-native-google-signin/google-signin",
+          {
+            "iosUrlScheme": "com.googleusercontent.apps.162286306085-l4sjg8lnq993qbonch9o5ltppelip65j"
+          }
+        ]
+      ]
+    }
   }
 }
