@@ -3,6 +3,7 @@ import {StyleSheet, Text, Pressable} from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
 import Logo from '../assets/LogoGoogleSignIn';
+import axios from 'axios';
 
 WebBrowser.maybeCompleteAuthSession().message;
 
@@ -12,7 +13,10 @@ export default function GoogleSignIn() {
         webClientId: process.env.GOOGLE_WEB_CLIENT_ID ,
         iosClientId: process.env.GOOGLE_IOS_CLIENT_ID,
         androidClientId: '',
+        redirectUri: 'http://localhost:8080/oauth2/authorization/google' // "http://127.0.0.1:8081" 
     });
+
+
 
     React.useEffect(() => {
         console.log(response);
