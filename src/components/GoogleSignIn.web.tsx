@@ -1,22 +1,23 @@
 import React from 'react';
-import {StyleSheet, Text, Pressable} from 'react-native';
+import {StyleSheet, Pressable} from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
-import * as Google from 'expo-auth-session/providers/google';
+import { useAuthRequest } from 'expo-auth-session';
 import Logo from '../assets/LogoGoogleSignIn';
-import axios from 'axios';
+
 
 WebBrowser.maybeCompleteAuthSession().message;
 
 export default function GoogleSignIn() {
 
-    const [request, response, promptAsync] = Google.useAuthRequest({ 
-        webClientId: process.env.GOOGLE_WEB_CLIENT_ID ,
-        iosClientId: process.env.GOOGLE_IOS_CLIENT_ID,
-        androidClientId: '',
-        redirectUri: 'http://localhost:8080/oauth2/authorization/google' // "http://127.0.0.1:8081" 
-    });
+    const client_id = process.env.GOOGLE_WEB_CLIENT_ID as string;
+    const redirect_uri = process.env.GOOGLE_REDIRECT_URI as string;;
+    const discovery = { authorizationEndpoint: process.env.GOOGLE_DISCOVERY_URI };
 
-
+    const [request, response, promptAsync] = useAuthRequest({ 
+      clientId: client_id, 
+      redirectUri: redirect_uri,
+      usePKCE: true
+    }, discovery);
 
     React.useEffect(() => {
         console.log(response);
@@ -48,12 +49,4 @@ const styles = StyleSheet.create({
       elevation: 10,
     //   backgroundColor: '#00A0DF',
     },
-    // text: {
-    //   fontSize: 16,
-    //   lineHeight: 21,
-    //   fontWeight: 'bold',
-    //   letterSpacing: 0.25,
-    //   color: 'white',
-    //   marginLeft: 10
-    // },
 });
