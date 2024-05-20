@@ -20,7 +20,9 @@
       "infoPlist": {
         "CFBundleURLTypes": [
           {
-            "CFBundleURLSchemes": ["com.googleusercontent.apps.162286306085-l4sjg8lnq993qbonch9o5ltppelip65j"]
+            "CFBundleURLSchemes": [
+              "com.googleusercontent.apps.162286306085-l4sjg8lnq993qbonch9o5ltppelip65j"
+            ]
           }
         ]
       }
@@ -46,6 +48,9 @@
           }
         ]
       ]
-    }
+    },
+    "plugins": [
+      "expo-secure-store"
+    ]
   }
 }

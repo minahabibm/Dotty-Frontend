@@ -2,7 +2,6 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
 import UserTAccountAuthentication from '../components/UserTAccountAuthentication';
-import UserSignIn from './UserSignIn';
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -10,10 +9,7 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
-        <Text>Dotty!</Text>
-
-        <UserSignIn />
-        
+        <Text>Dotty!</Text>        
         <UserTAccountAuthentication/>
     </View>
   );

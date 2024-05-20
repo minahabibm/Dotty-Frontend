@@ -1,23 +1,20 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import GoogleSignInWeb from '../components/GoogleSignIn.web';
+import SignInWeb from '../components/GoogleSignIn.web';
 
 export default function UserSignIn() {
   return (
     <View style={styles.container}>
-      <GoogleSignInWeb /> 
+      <SignInWeb /> 
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    // backgroundColor: '#fff',
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    // backgroundColor: '#fff',
   },
 });
-
-// import { Platform } from 'react-native';
-// import GoogleSignIn from '../components/GoogleSignIn';
-// { Platform.OS === 'web' ? <GoogleSignInWeb />  : <GoogleSignInWeb /> }
