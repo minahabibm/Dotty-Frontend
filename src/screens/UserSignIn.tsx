@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import SignInWeb from '../components/GoogleSignIn.web';
+import SignInWeb from '../components/SignIn.web';
 
 export default function UserSignIn() {
   return (

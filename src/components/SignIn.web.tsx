@@ -10,8 +10,8 @@ WebBrowser.maybeCompleteAuthSession().message;
 export default function GoogleSignIn() {
 
     const client_id = process.env.GOOGLE_WEB_CLIENT_ID as string;
-    const redirect_uri = process.env.GOOGLE_REDIRECT_URI as string;;
-    const discovery = { authorizationEndpoint: process.env.GOOGLE_DISCOVERY_URI };
+    const redirect_uri = process.env.AUHT0_REDIRECT_URI as string;;
+    const discovery = { authorizationEndpoint: process.env.AUHT0_DISCOVERY_URI };
 
     const [request, response, promptAsync] = useAuthRequest({ 
       clientId: client_id, 
