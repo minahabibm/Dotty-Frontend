@@ -12,6 +12,7 @@ import {
   } from "react-native";
 import { DrawerContentScrollView, DrawerItemList } from "@react-navigation/drawer";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import SignOut from './SignOut.web'
   
 export default function CustomDrawer(props: any) {
   return (
@@ -70,12 +71,7 @@ export default function CustomDrawer(props: any) {
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.signOutButton}>
-          <View style={styles.signOutView}>
-            <Ionicons name="exit-outline" size={22} />
-            <Text style={styles.signOutText}> Sign Out </Text>
-          </View>
-        </TouchableOpacity>
+        <SignOut />
       </View>
     
     </View>
@@ -144,17 +140,6 @@ const styles = StyleSheet.create({
     alignItems: "center" 
   },
   shareText: {
-    fontSize: 15,
-    marginLeft: 5,
-  },
-  signOutButton: { 
-    paddingVertical: 15 
-  },
-  signOutView: { 
-    flexDirection: "row", 
-    alignItems: "center" 
-  },
-  signOutText: {
     fontSize: 15,
     marginLeft: 5,
   }

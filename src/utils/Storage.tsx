@@ -7,8 +7,11 @@ const isWeb = Platform.OS === 'web';
 interface StorageInterface {
   setItem: (key: string, value: string) => Promise<void>;
   getItem: (key: string) => Promise<string | null>;
+  deleteItem: (key: string) => Promise<void>;
   setSecureItem: (key: string, value: string) => Promise<void>;
   getSecureItem: (key: string) => Promise<string | null>;
+  deleteSecureItem: (key: string) => Promise<void>;
+
 }
 
 const Storage: StorageInterface = {
@@ -28,6 +31,14 @@ const Storage: StorageInterface = {
     }
   },
 
+  deleteItem: async (key: string): Promise<void> => {
+    if (isWeb) {
+      localStorage.removeItem(key);
+    } else {
+      await AsyncStorage.removeItem(key);
+    }
+  },
+
   setSecureItem: async (key: string, value: string): Promise<void> => {
     if (isWeb) {
       console.warn('Secure storage is not supported on the web. Falling back to localStorage.');
@@ -43,6 +54,15 @@ const Storage: StorageInterface = {
       return localStorage.getItem(key);
     } else {
       return await SecureStore.getItemAsync(key);
+    }
+  },
+
+  deleteSecureItem: async (key: string): Promise<void> => {
+    if (isWeb) {
+      console.warn('Secure storage is not supported on the web. Falling back to localStorage.');
+       localStorage.removeItem(key);
+    } else {
+       await SecureStore.deleteItemAsync(key);
     }
   }
 };
