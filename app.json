@@ -38,7 +38,7 @@
       "favicon": "./assets/favicon.png",
       "bundler": "metro"
     },
-    "scheme": "dotty",
+    "scheme": "com.anonymous.dotty-app",
     "expo": {
       "plugins": [
         [

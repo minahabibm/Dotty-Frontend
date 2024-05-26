@@ -1,29 +1,67 @@
 import React from 'react';
 import {StyleSheet, Pressable} from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
-import { useAuthRequest } from 'expo-auth-session';
+import * as AuthSession from 'expo-auth-session';
+import Storage from '../utils/Storage';
+import { Buffer } from 'buffer';
 import Logo from '../assets/LogoGoogleSignIn';
 
 
-WebBrowser.maybeCompleteAuthSession().message;
+WebBrowser.maybeCompleteAuthSession();
+
+// interface DecodedJwt {
+//     header: Record<string, any>;
+//     payload: Payload;
+//     signature: string;
+// }
+
+// interface Payload {
+//     header: Record<string, any>;
+//     payload: Record<string, any>;
+//     signature: string;
+// }
 
 export default function GoogleSignIn() {
+    const authUrl = process.env.AUHT0_DISCOVERY_URI as string;
+    const redirectUri = AuthSession.makeRedirectUri();
 
-    const client_id = process.env.GOOGLE_WEB_CLIENT_ID as string;
-    const redirect_uri = process.env.AUHT0_REDIRECT_URI as string;;
-    const discovery = { authorizationEndpoint: process.env.AUHT0_DISCOVERY_URI };
 
-    const [request, response, promptAsync] = useAuthRequest({ 
-      clientId: client_id, 
-      redirectUri: redirect_uri,
-      usePKCE: true
-    }, discovery);
-
-    React.useEffect(() => {
-        console.log(response);
-        if (response?.type === 'success') {
+    const decodeJwt = (token : string) => {
+        const parts = token.split('.');
+        if (parts.length !== 3) {
+            throw new Error('Invalid JWT format');
         }
-    }, [response]);
+        const [header, payload, signature] = parts.map(encodedPayload =>  Buffer.from(encodedPayload, 'base64').toString());
+
+        return {
+            header: header,
+            payload: JSON.parse(payload),
+            signature
+        };
+    };
+
+    const handleAuthentication = async () => {
+        await WebBrowser.openAuthSessionAsync(authUrl, redirectUri).then(response => {
+            if (response?.type === 'success' && response?.url) {
+                const params = new URLSearchParams(response.url.split('?')[1]); // Extract query parameters
+                const accessToken = params.get('access_token');
+                const idToken = params.get('id_token');
+                const decodedIdToken = decodeJwt(idToken as  string);
+                decodedIdToken.payload.accessToken = accessToken;
+
+
+            
+                // console.log("access token: " +  accessToken );
+                // console.log("id token: " + idToken);
+                Storage.setSecureItem("user", JSON.stringify(decodedIdToken.payload))
+                console.log("decoded id token: " + typeof Storage.getSecureItem("user"));
+                
+            }
+        })
+        
+    };
+    
+    React.useEffect(() => {}, []);
 
     return (
         <Pressable 
@@ -31,7 +69,7 @@ export default function GoogleSignIn() {
                 pressed ? { opacity: 0.25 } : {opacity: 1},
                 styles.button
             ]}
-            onPress={() => promptAsync()}
+            onPress={() => handleAuthentication()}
         >
             <Logo />
         </Pressable>
