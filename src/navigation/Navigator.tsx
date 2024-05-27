@@ -1,0 +1,62 @@
+import 'react-native-gesture-handler';
+import React, { useEffect } from 'react';
+// import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import CustomDrawer from '../components/CustomDrawer';
+import { useAuthContext } from '../utils/AuthProvider';
+import Storage from '../utils/Storage';
+import SplashScreen from '../screens/SplashScreen';
+import UserSignIn from  '../screens/UserSignIn';
+import HomeScreen from '../screens/Home';
+import ConsoleScreen from '../screens/Console';
+import SettingsScreen from '../screens/Settings';
+
+
+// const Stack = createNativeStackNavigator();
+const Stack = createDrawerNavigator();
+
+function NavigationStack() {
+  const {state, restoreUser } = useAuthContext();
+  
+  console.log(state);  
+  useEffect(() => {
+    Storage.getSecureItem("user").then(
+      async (value: any) => {
+        // setUser(value);
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        restoreUser(value);
+      }
+    ).catch(
+      (e) => { console.warn(e) }
+    )
+  }, []);
+
+
+  return (
+    <Stack.Navigator
+        drawerContent={(props) =>   <CustomDrawer {...props} />}
+        initialRouteName="Home"
+    >
+    {!state.user ? (
+        <Stack.Screen 
+        name="SignIn" 
+        component={state.isLoading ? SplashScreen :  UserSignIn} 
+        options={{ 
+            // drawerType: 'back',
+            swipeEnabled: false,
+            headerShown: false,
+            // animationTypeForReplace: state.isSignout ? 'pop' : 'push',
+        }}
+        />
+    ) : (
+        <>
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Console" component={ConsoleScreen} />
+        <Stack.Screen name="Settings" component={SettingsScreen} />
+        </>
+    )}
+    </Stack.Navigator>
+  );
+}
+
+export default NavigationStack;

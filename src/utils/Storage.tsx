@@ -1,18 +1,9 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as SecureStore from 'expo-secure-store';
 import { Platform } from 'react-native';
+import { StorageInterface } from '../types/storage';
 
 const isWeb = Platform.OS === 'web';
-
-interface StorageInterface {
-  setItem: (key: string, value: string) => Promise<void>;
-  getItem: (key: string) => Promise<string | null>;
-  deleteItem: (key: string) => Promise<void>;
-  setSecureItem: (key: string, value: string) => Promise<void>;
-  getSecureItem: (key: string) => Promise<string | null>;
-  deleteSecureItem: (key: string) => Promise<void>;
-
-}
 
 const Storage: StorageInterface = {
   setItem: async (key: string, value: string): Promise<void> => {
