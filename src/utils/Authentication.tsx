@@ -38,7 +38,6 @@ export const useAuthActions = () => {
   const navigation = useNavigation<ScreenNavigationProp>();
     const { signIn, signOut } = useAuthContext();
     
-  
     const handleAuthenticationLoginIn = async () => {
       await WebBrowser.openAuthSessionAsync(authUrl, redirectUri).then(response => {
         if (response?.type === 'success' && response?.url) {
@@ -53,10 +52,25 @@ export const useAuthActions = () => {
     };
   
     const handleAuthenticationLoginOut = async () => {
-      await Storage.deleteSecureItem("user").then(() => signOut());
-      navigation.dispatch(DrawerActions.closeDrawer());
-    };
-  
+      let urlWithHeaders = "http://localhost:8080/api/dotty/oauth2/auth0/logout"
+      await Storage.getSecureItem("user")
+        .then((user : any) => {
+          user = JSON.parse(user)
+          // urlWithHeaders = urlWithHeaders + `${encodeURIComponent("Authorization")}=${encodeURIComponent(user.accessToken)}`;
+        })
+      await WebBrowser.openAuthSessionAsync(urlWithHeaders, redirectUri)
+        .then(
+          async (response : any) => {
+            if(response?.type === 'success') {
+              console.log("response"  +  JSON.stringify(response));
+              await Storage.deleteSecureItem("user")
+            }})
+        .finally(() => {
+          signOut();
+          navigation.dispatch(DrawerActions.closeDrawer())
+        })
+    }
+
     return {
       handleAuthenticationLoginIn,
       handleAuthenticationLoginOut,
