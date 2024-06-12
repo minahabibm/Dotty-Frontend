@@ -9,6 +9,7 @@ import { ScreenNavigationProp } from '../types/Navigation';
 
 
 const authUrl = process.env.AUHT0_DISCOVERY_URI as string;
+let urlWithHeaders = process.env.AUHT0_SIGNOUT_URI as string;
 const redirectUri = AuthSession.makeRedirectUri();
 
 export const getTokens = (ResponseUrl : String) => {
@@ -52,11 +53,11 @@ export const useAuthActions = () => {
     };
   
     const handleAuthenticationLoginOut = async () => {
-      let urlWithHeaders = "http://localhost:8080/api/dotty/oauth2/auth0/logout"
       await Storage.getSecureItem("user")
         .then((user : any) => {
           user = JSON.parse(user)
-          // urlWithHeaders = urlWithHeaders + `${encodeURIComponent("Authorization")}=${encodeURIComponent(user.accessToken)}`;
+          urlWithHeaders = urlWithHeaders + `?${("Authorization")}=${(user.accessToken)}`; // encodeURIComponent
+          console.log(urlWithHeaders);
         })
       await WebBrowser.openAuthSessionAsync(urlWithHeaders, redirectUri)
         .then(
@@ -67,6 +68,7 @@ export const useAuthActions = () => {
             }})
         .finally(() => {
           signOut();
+          urlWithHeaders = process.env.AUHT0_SIGNOUT_URI as string;
           navigation.dispatch(DrawerActions.closeDrawer())
         })
     }
