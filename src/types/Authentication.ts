@@ -6,6 +6,12 @@ export interface AuthState {
     user: any;
 }
 
+export interface TokenParams {
+    accessToken: string | null;
+    refreshToken: string | null;
+    idToken: string | null;
+}
+
 export  interface AuthContextType {
     state: AuthState;
     restoreUser: (data: any) => void;
@@ -16,4 +22,3 @@ export  interface AuthContextType {
 export  interface AuthProviderProps {
     children: ReactNode;
 }
-  

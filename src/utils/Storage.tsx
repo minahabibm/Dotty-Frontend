@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as SecureStore from 'expo-secure-store';
 import { Platform } from 'react-native';
-import { StorageInterface } from '../types/storage';
+import { StorageInterface } from '../types/Storage';
 
 const isWeb = Platform.OS === 'web';
 

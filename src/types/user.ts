@@ -5,6 +5,7 @@ export interface User {
     picture: string;
     locale: string;
     accessToken: string;
+    refreshToken: string;
 }
 
 export interface DecodedJwt {
@@ -29,4 +30,11 @@ export interface Payload {
     sub: string;
     sid: string;
     accessToken: string;
+    refreshToken: string;
+}
+
+export interface UserInterface {
+    getUser: () => Promise<User>;
+    setUser: (user: User) => Promise<void>;
+    deleteUser: () => Promise<void>;
 }
