@@ -25,7 +25,7 @@ const getTokens = (ResponseUrl : String) : TokenParams=> {
   } 
 }
 
-export const decodeJwt = (token : string) : DecodedJwt => {
+const decodeJwt = (token : string) : DecodedJwt => {
     const parts = token.split('.');
     if (parts.length !== 3) {
         throw new Error('Invalid JWT format');
@@ -77,6 +77,7 @@ const refreshTokens = async (): Promise<void> => {
   });
 }
 
+// TODO Reroute user to login page for 401 error.
 export const getAccessToken = async (): Promise<String> => {
   let user = await UserProvider.getUser();
   const accessToken = user.accessToken;

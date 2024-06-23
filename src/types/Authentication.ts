@@ -12,13 +12,13 @@ export interface TokenParams {
     idToken: string | null;
 }
 
-export  interface AuthContextType {
+export interface AuthContextType {
     state: AuthState;
     restoreUser: (data: any) => void;
     signIn: (data: any) => Promise<void>;
     signOut: () => void;
 }
 
-export  interface AuthProviderProps {
+export interface AuthProviderProps {
     children: ReactNode;
 }

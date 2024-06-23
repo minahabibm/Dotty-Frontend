@@ -1,12 +1,14 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { WebSocketProvider } from '../utils/WebSocketProvider';
+import Console from '../components/Console'
 
 export default function HomeScreen() {
-  
+ 
   return (
-    <View style={styles.container}>        
-        <Text>Console!</Text>
-    </View>
+    <WebSocketProvider>
+       <Console />
+    </WebSocketProvider>
   );
 }
 
