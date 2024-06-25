@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState , useEffect, useCallback, useMemo} from 'react';
+import React, { createContext, useContext, useState, useCallback, useMemo} from 'react';
 import { WebSocketContextType, WebSocketProviderProps } from '../types/WebSockets';
 import { getAccessToken } from './Authentication';
 
@@ -19,61 +19,66 @@ export declare var WebSocket: {
 };
 
 const WebSocketContext = createContext<WebSocketContextType | undefined>(undefined);
-
 const WebSocketProvider : React.FC<WebSocketProviderProps> = ({ children }) => {
-    const [webSocket, setWebSocket] = useState<WebSocket | null>(null);
+    const [webSocket, setWebSocket] =  useState<WebSocket | null | undefined>(undefined);
 
-    const connect = useCallback(async () => {
+    const initializeWebSocket = async () => {
         if (!webSocket) {
-            try {
-                const wsUrl = process.env.DOTTY_WS_URL as string;
-                const accessToken = await getAccessToken();
-                
-                const webSocket = new WebSocket(wsUrl, null, {
-                    headers: {
-                      Authorization: `Bearer ${accessToken}`
-                    }
-                });
-        
-                webSocket.onopen = () => {
+            const wsUrl = process.env.DOTTY_WS_URL as string;
+            const accessToken = await getAccessToken();
+            const webSocketInstance = new WebSocket(wsUrl, null, {
+                headers: {
+                Authorization: `Bearer ${accessToken}`
+                }
+            });
+            return new Promise<WebSocket>((resolve, reject) => {    
+                webSocketInstance.onopen = () => {
                     console.log('WebSocket connected');
-                    setWebSocket(webSocket);
+                    setWebSocket(webSocketInstance);
+                    resolve(webSocketInstance);
                 };
-                
-                // webSocket.onmessage = function(event) {
-                //     console.log('Received message:', event.data);
-                // };
-                
-                webSocket.onerror = function(error) {
+    
+                webSocketInstance.onerror = (error) => {
                     console.error('WebSocket error:', error);
+                    setWebSocket(null);
+                    reject(error);
                 };
-                
-                webSocket.onclose = () => {
+    
+                webSocketInstance.onclose = () => {
                     console.log('WebSocket disconnected');
                     setWebSocket(null);
                 };
-
-            } catch (error) {
-                console.error('Error connecting to WebSocket:', error);
-            }
+            });
+        } else {
+            return Promise.resolve(webSocket);
         }
-    }, [webSocket]) ;
+    };
+
+    const connect = useCallback(async () => {
+        try {
+            if (!webSocket || webSocket.readyState === WebSocket.CLOSED) {
+              await initializeWebSocket();
+            }
+        } catch (error) {
+            console.error('Failed to connect:', error);
+            // throw error; // Re-throw error to be handled by caller
+        }
+    }, [webSocket]);
 
     const disconnect = useCallback(() => {
-        if (webSocket) {
+        if (webSocket && webSocket.readyState === WebSocket.OPEN) {
             webSocket.close();
-            setWebSocket(null);
         }
     }, [webSocket]);
 
     const subscribe = useCallback((topic: string) => {
-        if (webSocket) {
-            webSocket.send(JSON.stringify({ type: 'subscribe', topic: topic }));
-        }
+        if (webSocket && webSocket.readyState === WebSocket.OPEN) {
+            webSocket.send(JSON.stringify({ type: 'subscribe', topic }));
+        } 
     }, [webSocket]);
-    
+
     const unsubscribe = useCallback((topic: string) => {
-        if (webSocket) {
+        if (webSocket && webSocket.readyState === WebSocket.OPEN) {
             webSocket.send(JSON.stringify({ type: 'unsubscribe', topic }));
         }
     }, [webSocket]);
@@ -87,9 +92,7 @@ const WebSocketProvider : React.FC<WebSocketProviderProps> = ({ children }) => {
     }), [webSocket, connect, disconnect, subscribe, unsubscribe]);
 
     return (
-        <WebSocketContext.Provider 
-            value={value}
-        >
+        <WebSocketContext.Provider value={value}>
             {children}
         </WebSocketContext.Provider>
     );

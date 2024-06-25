@@ -18,6 +18,6 @@ export default function UpdatesList ({messages} : UpdatesListProps) {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#fff',
-        margin: 20
+        marginLeft: 3,
     }
 });
