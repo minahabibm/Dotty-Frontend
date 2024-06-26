@@ -105,7 +105,6 @@ export const useAuthActions = () => {
           const user: User = decodedIdToken.payload;
           await UserProvider.setUser(user)
             .then(() => signIn(user));
-          refreshTokens();
         }
       });
     };

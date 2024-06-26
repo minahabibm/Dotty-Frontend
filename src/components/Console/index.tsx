@@ -1,17 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, StyleSheet, SafeAreaView } from 'react-native';
-import { WebSocketProvider, useWebSocket } from '../../utils/WebSocketProvider';
+import { SafeAreaView, StyleSheet } from 'react-native';
+import { useWebSocket } from '../../utils/WebSocketProvider';
 import UpdatesList from './UpdatesList';
 import { Message } from '../../types/WebSockets';
 import WebSocketIndicator from './WebSocketIndicator';
 import RetryConnection from './RetryConnection';
 
-
 export default function Console() {
   const { webSocket, connect, disconnect, subscribe, unsubscribe } = useWebSocket();
   const [messagesList, setMessagesList]  =  useState<Message[]>([]);
   const initialConnectionAttempted = useRef(false);
-  const topics = ['/topic/public'];
+  const topics = ['/topic/public',  '/queue/private'];
 
 
   const onComponentMount = async () => {
@@ -68,13 +67,6 @@ const styles = StyleSheet.create({
     // alignItems: 'center',
   //   justifyContent: 'center',
   },
-  // connectionStatus: {
-  //   flexDirection: 'row',
-  //   justifyContent: 'space-between',
-  //   // backgroundColor: '#fff',
-  //   // alignItems: 'center',
-  // //   justifyContent: 'center',
-  // },
 });
 
 
