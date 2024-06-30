@@ -78,13 +78,17 @@ const refreshTokens = async (): Promise<void> => {
 }
 
 // TODO Reroute user to login page for 401 error.
-export const getAccessToken = async (): Promise<String> => {
+export const getAccessToken = async (): Promise<String |  undefined> => {
   let user = await UserProvider.getUser();
   const accessToken = user.accessToken;
   if(isTokenExpired(accessToken)) {
-    refreshTokens();
-    return (await UserProvider.getUser()).accessToken;
+    await refreshTokens();
+    await UserProvider.getUser().then(user => {
+      console.log("refreshed access token: ", user.accessToken);
+      return user?.accessToken;
+    });
   } else {
+    console.log("access token: ", user.accessToken);
     return accessToken;
   }
 }
@@ -117,7 +121,6 @@ export const useAuthActions = () => {
         .then(
           async (response : any) => {
             if(response?.type === 'success') {
-              console.log("response"  +  JSON.stringify(response));
               await UserProvider.deleteUser();
             }})
         .finally(() => {

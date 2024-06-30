@@ -22,8 +22,8 @@ export default function App() {
   }, discovery);
 
   React.useEffect(() => {
-    console.log(response)
-    console.log(redirectUri + " " + redirect_uri)
+    // console.log(response)
+    // console.log(redirectUri + " " + redirect_uri)
     if (response?.type === 'success') {
       const { code } = response.params;
     }

@@ -18,7 +18,6 @@ const Stack = createDrawerNavigator();
 function NavigationStack() {
   const {state, restoreUser } = useAuthContext();
   
-  console.log(state);  
   useEffect(() => {
     Storage.getSecureItem("user").then(
       async (value: any) => {

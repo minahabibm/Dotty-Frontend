@@ -11,7 +11,7 @@ const UserProvider: UserInterface = {
     },
     
     setUser: async (user: User): Promise<void> => {
-        Storage.setSecureItem("user", JSON.stringify(user));
+        await Storage.setSecureItem("user", JSON.stringify(user));
     },
   
     deleteUser: async (): Promise<void> => {

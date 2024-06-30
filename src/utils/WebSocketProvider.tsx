@@ -23,12 +23,14 @@ const WebSocketProvider : React.FC<WebSocketProviderProps> = ({ children }) => {
     const [webSocket, setWebSocket] =  useState<WebSocket | null | undefined>(undefined);
 
     const initializeWebSocket = async () => {
+        
         if (!webSocket) {
             const wsUrl = process.env.DOTTY_WS_URL as string;
             const accessToken = await getAccessToken();
+            console.log("WebSocket: ", accessToken);
             const webSocketInstance = new WebSocket(wsUrl, null, {
                 headers: {
-                Authorization: `Bearer ${accessToken}`
+                    Authorization: `Bearer ${accessToken}`
                 }
             });
             return new Promise<WebSocket>((resolve, reject) => {    
