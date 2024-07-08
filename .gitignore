@@ -44,3 +44,4 @@ web-build/
 android/
 ios/
 /assets/signin-assets
+public/service-worker.js
