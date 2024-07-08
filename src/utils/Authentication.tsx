@@ -8,13 +8,18 @@ import { DecodedJwt, User } from '../types/User';
 import { ScreenNavigationProp } from '../types/Navigation';
 import UserProvider from './UserProvider';
 import { useAuthContext } from './AuthProvider';
+import { 
+  AUHT0_CLIENT_ID as clientId, 
+  AUHT0_CLIENT_SECRET  as clientSecret, 
+  AUHT0_DISCOVERY_URI as authUrl, 
+  AUHT0_REFRESH_URI as refreshUrl, 
+  AUHT0_SIGNOUT_URI 
+} from '@env';
 
-const clientId = process.env.AUHT0_CLIENT_ID as string;
-const clientSecret = process.env.AUHT0_CLIENT_SECRET as string;
-const authUrl = process.env.AUHT0_DISCOVERY_URI as string;
-const refreshUrl = process.env.AUHT0_REFRESH_URI as string;
-let urlWithHeaders = process.env.AUHT0_SIGNOUT_URI as string;
+let urlWithHeaders = AUHT0_SIGNOUT_URI;
 const redirectUri = AuthSession.makeRedirectUri();
+
+console.log(authUrl + "\n" + refreshUrl + "\n" + urlWithHeaders + "\n");
 
 const getTokens = (ResponseUrl : String) : TokenParams=> {
   const params = new URLSearchParams(ResponseUrl.split('?')[1]); // Extract query parameters
@@ -125,7 +130,7 @@ export const useAuthActions = () => {
             }})
         .finally(() => {
           signOut();
-          urlWithHeaders = process.env.AUHT0_SIGNOUT_URI as string;
+          urlWithHeaders = AUHT0_SIGNOUT_URI;
           navigation.dispatch(DrawerActions.closeDrawer());
         })
     }
