@@ -1,13 +1,8 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { getAccessToken } from './Authentication';
+import { DOTTY_BASE_URL as baseURL } from '@env';
 
 // TODO Reroute user to login page for 401 error.
-interface TokenResponse {
-  access_token: string;
-  refresh_token?: string;
-}
-
-const baseURL = process.env.DOTTY_BASE_URL as string;
 const apiClient = axios.create({
   baseURL: baseURL, // Your API base URL
   headers: {

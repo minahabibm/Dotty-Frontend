@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useCallback, useMemo} from 'react';
 import { WebSocketContextType, WebSocketProviderProps } from '../types/WebSockets';
 import { getAccessToken } from './Authentication';
+import { DOTTY_WS_URL as wsUrl } from '@env';
 
 export declare var WebSocket: {
     prototype: WebSocket;
@@ -25,9 +26,8 @@ const WebSocketProvider : React.FC<WebSocketProviderProps> = ({ children }) => {
     const initializeWebSocket = async () => {
         
         if (!webSocket) {
-            const wsUrl = process.env.DOTTY_WS_URL as string;
             const accessToken = await getAccessToken();
-            console.log("WebSocket: ", accessToken);
+            // console.log("WebSocket: ", accessToken);
             const webSocketInstance = new WebSocket(wsUrl, null, {
                 headers: {
                     Authorization: `Bearer ${accessToken}`
