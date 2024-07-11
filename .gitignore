@@ -45,3 +45,5 @@ android/
 ios/
 /assets/signin-assets
 public/service-worker.js
+.env.production
+.env.development

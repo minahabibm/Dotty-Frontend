@@ -3,16 +3,16 @@ import {StyleSheet, Text, Pressable} from 'react-native';
 import {makeRedirectUri, useAuthRequest} from 'expo-auth-session';
 import * as WebBrowser from 'expo-web-browser';
 import Logo from '../assets/LogoChsh';
-
+import { 
+  CHSH_AUTHORIZATION_ENDPOINT as authorization_endpoint,
+  CHSH_AUTHORIZATION_KEY as client_id,
+  CHSH_AUTHORIZATION_REDIRECT_URI as redirect_uri
+} from '@env';
 
 WebBrowser.maybeCompleteAuthSession().message;
 
 export default function App() {
-  const authorization_endpoint = process.env.CHSH_AUTHORIZATION_ENDPOINT as string;
-  const client_id = process.env.CHSH_AUTHORIZATION_KEY as string;
-  const redirect_uri = process.env.CHSH_AUTHORIZATION_REDIRECT_URI as string;
   const title = "Sign In";
-
   const discovery = { authorizationEndpoint: authorization_endpoint};
   const redirectUri = makeRedirectUri();
   const [request, response, promptAsync] = useAuthRequest({ 
