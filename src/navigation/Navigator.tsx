@@ -21,8 +21,7 @@ function NavigationStack() {
   useEffect(() => {
     Storage.getSecureItem("user").then(
       async (value: any) => {
-        // setUser(value);
-        await new Promise(resolve => setTimeout(resolve, 2000));
+        // await new Promise(resolve => setTimeout(resolve, 2000));
         restoreUser(value);
       }
     ).catch(

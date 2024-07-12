@@ -16,16 +16,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.anonymous.dotty-app",
-      "infoPlist": {
-        "CFBundleURLTypes": [
-          {
-            "CFBundleURLSchemes": [
-              "com.googleusercontent.apps.162286306085-l4sjg8lnq993qbonch9o5ltppelip65j"
-            ]
-          }
-        ]
-      }
+      "bundleIdentifier": "com.anonymous.dotty-app"
     },
     "android": {
       "adaptiveIcon": {
@@ -39,16 +30,6 @@
       "bundler": "metro"
     },
     "scheme": "com.anonymous.dotty-app",
-    "expo": {
-      "plugins": [
-        [
-          "@react-native-google-signin/google-signin",
-          {
-            "iosUrlScheme": "com.googleusercontent.apps.162286306085-l4sjg8lnq993qbonch9o5ltppelip65j"
-          }
-        ]
-      ]
-    },
     "plugins": [
       "expo-secure-store"
     ]
