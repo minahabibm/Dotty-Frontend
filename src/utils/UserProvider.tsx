@@ -1,4 +1,3 @@
-
 import { UserInterface, User } from "../types/User";
 import Storage from './Storage';
 

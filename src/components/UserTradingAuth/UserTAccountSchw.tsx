@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet, Text, Pressable} from 'react-native';
 import {makeRedirectUri, useAuthRequest} from 'expo-auth-session';
 import * as WebBrowser from 'expo-web-browser';
-import Logo from '../assets/LogoChsh';
+import Logo from '../../assets/LogoChsh';
 import { 
   CHSH_AUTHORIZATION_ENDPOINT as authorization_endpoint,
   CHSH_AUTHORIZATION_KEY as client_id,
@@ -54,6 +54,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     elevation: 5,
     backgroundColor: '#00A0DF',
+    margin: 5
   },
   text: {
     fontSize: 16,

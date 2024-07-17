@@ -5,7 +5,7 @@ const SvgComponent = (props: SvgProps) => (
     // xmlns="http://www.w3.org/2000/svg"
     // xmlSpace="preserve"
     width={45}
-    height={47}
+    height={45}
     {...props}
   >
     <G>

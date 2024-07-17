@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import UserTAccountAuthentication from '../components/UserTAccountAuthentication';
+import UserTAccountAuthentication from '../components/UserTradingAuth/';
 
 export default function HomeScreen() {
 

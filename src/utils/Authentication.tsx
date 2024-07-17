@@ -19,7 +19,6 @@ import {
 let urlWithHeaders = AUHT0_SIGNOUT_URI;
 const redirectUri = AuthSession.makeRedirectUri();
 
-console.log(authUrl + "\n" + refreshUrl + "\n" + urlWithHeaders + "\n");
 
 const getTokens = (ResponseUrl : String) : TokenParams=> {
   const params = new URLSearchParams(ResponseUrl.split('?')[1]); // Extract query parameters
