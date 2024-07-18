@@ -3,14 +3,6 @@ import {StyleSheet, Text, Pressable} from 'react-native';
 import { useModal } from '../../utils/ModalProvider';
 import Logo from '../../assets/LogoAlpaca';
 import UserAlpacaModal from './AlpacaModal';
-import { ModalProvider } from '../../utils/ModalProvider';
-
-import { 
-  CHSH_AUTHORIZATION_ENDPOINT as authorization_endpoint,
-  CHSH_AUTHORIZATION_KEY as client_id,
-  CHSH_AUTHORIZATION_REDIRECT_URI as redirect_uri
-} from '@env';
-
 
 export default function App() {
   const title = "Sign In";

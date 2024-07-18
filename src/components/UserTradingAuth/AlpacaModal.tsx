@@ -2,6 +2,9 @@ import React, {useState} from 'react';
 import {View, Alert, Modal, Text, Pressable, TextInput, Platform, StyleSheet} from 'react-native';
 import { useModal } from '../../utils/ModalProvider';
 import Logo from '../../assets/LogoAlpaca';
+import apiClient from '../../utils/ApiClient';
+import { ALPACA_AUTHORIZATION_ENDPOINT as authorization_endpoint } from '@env';
+  
 
 const ModalButton  = (props: { title: string; onPress: () => void;}) => { 
     return(
@@ -11,7 +14,7 @@ const ModalButton  = (props: { title: string; onPress: () => void;}) => {
                 styles.button
             ]}
             onPress={() => props.onPress()}
-            >
+        >
             <Text style={styles.textStyle}>{props.title}</Text>
         </Pressable>
     )
@@ -22,9 +25,36 @@ const userAlpacaModal = () => {
     const [apiKey , setApiKey] = useState("");
     const [apiSecretKey , useApiSecretKey] = useState("");
 
-    const handleSaveButton = () => {
-        console.log(apiKey + " " + apiSecretKey);
-        closeModal();
+    const handleSaveButton = async () => {
+        
+        const data = {
+            key: apiKey,
+            secret: apiSecretKey
+        };
+        await apiClient.post(authorization_endpoint, data)
+        .then(response => {
+            if(response.status === 200) {
+                console.log(response.data);
+                setApiKey("");
+                useApiSecretKey("");
+                closeModal();
+            }
+        }).catch(error => {
+            if (error.response) {           // The server responded with a status code outside the 2xx range
+                console.log('Error response:', error.response.status);
+            } else if (error.request) {     // The request was made but no response was received
+                console.log('Error request:', error.request.status);
+            } else {                        // Something happened in setting up the request that triggered an error
+                console.log('Error message:', error.message);
+            }
+        });
+        
+    };
+
+    const handleCancelButton = async () => {
+        setApiKey("");
+        useApiSecretKey("");
+        closeModal(); 
     };
 
     return (
@@ -45,14 +75,14 @@ const userAlpacaModal = () => {
                     
                     
                     <View>
-                        <TextInput style={styles.textInput} placeholder="YOUR_API_KEY_ID" onChangeText={setApiKey} />    
-                        <TextInput style={styles.textInput} placeholder="YOUR_API_SECRET_KEY" onChangeText={useApiSecretKey} />
+                        <TextInput style={styles.textInput} placeholder="YOUR_API_KEY_ID" placeholderTextColor="#71717a" onChangeText={setApiKey} />    
+                        <TextInput style={styles.textInput} placeholder="YOUR_API_SECRET_KEY" placeholderTextColor="#71717a" onChangeText={useApiSecretKey} />
                     </View>
                     
-                   
+
                     <View style={styles.modalButtonView}>
                         <ModalButton title ="save" onPress={handleSaveButton}></ModalButton>  
-                        <ModalButton title ="cancel" onPress={closeModal}></ModalButton>
+                        <ModalButton title ="cancel" onPress={handleCancelButton}></ModalButton>
                     </View>
                 </View>
             </View>
@@ -92,8 +122,9 @@ const userAlpacaModal = () => {
     },
     
     textInput: {
-        // borderWidth: 1,
+        borderWidth: 0.2,
         borderRadius: 10,
+        borderColor:  "#71717a",
         margin: 5,
         padding: 10,
         backgroundColor: "#ffffff"
