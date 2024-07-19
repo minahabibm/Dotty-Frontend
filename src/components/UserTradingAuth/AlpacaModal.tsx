@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {View, Alert, Modal, Text, Pressable, TextInput, Platform, StyleSheet} from 'react-native';
+import { useGlobalState } from '../../utils/GlobalStateProvider';
 import { useModal } from '../../utils/ModalProvider';
 import Logo from '../../assets/LogoAlpaca';
 import apiClient from '../../utils/ApiClient';
@@ -20,8 +21,10 @@ const ModalButton  = (props: { title: string; onPress: () => void;}) => {
     )
 }
 
+// TODO redirect user to sign in.
 const userAlpacaModal = () => {
-    const { isModalOpen, openModal, closeModal } = useModal();
+    const { state, setActiveTradingAccount } = useGlobalState();
+    const { isModalOpen, closeModal } = useModal();
     const [apiKey , setApiKey] = useState("");
     const [apiSecretKey , useApiSecretKey] = useState("");
 
@@ -38,6 +41,7 @@ const userAlpacaModal = () => {
                 setApiKey("");
                 useApiSecretKey("");
                 closeModal();
+                setActiveTradingAccount(!state.activeTradingAccount);
             }
         }).catch(error => {
             if (error.response) {           // The server responded with a status code outside the 2xx range

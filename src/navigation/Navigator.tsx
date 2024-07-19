@@ -32,27 +32,27 @@ function NavigationStack() {
 
   return (
     <Stack.Navigator
-        drawerContent={(props) =>   <CustomDrawer {...props} />}
-        initialRouteName="Home"
+      drawerContent={(props) =>   <CustomDrawer {...props} />}
+      initialRouteName="Home"
     >
-    {!state.user ? (
+      {!state.user ? (
         <Stack.Screen 
-        name="SignIn" 
-        component={state.isLoading ? SplashScreen :  UserSignIn} 
-        options={{ 
+          name="SignIn" 
+          component={state.isLoading ? SplashScreen :  UserSignIn} 
+          options={{ 
             // drawerType: 'back',
             swipeEnabled: false,
             headerShown: false,
             // animationTypeForReplace: state.isSignout ? 'pop' : 'push',
-        }}
+          }}
         />
-    ) : (
-        <>
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Console" component={ConsoleScreen} />
-        <Stack.Screen name="Settings" component={SettingsScreen} />
-        </>
-    )}
+      ) : (
+          <>
+          <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name="Console" component={ConsoleScreen} />
+          <Stack.Screen name="Settings" component={SettingsScreen} />
+          </>
+      )}
     </Stack.Navigator>
   );
 }
