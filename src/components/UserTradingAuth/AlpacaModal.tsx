@@ -107,8 +107,6 @@ const userAlpacaModal = () => {
                         </View>
                     </View>
 
-                    
-                    
 
                     <View style={styles.modalButtonView}>
                         <ModalButton title ="save" onPress={handleSaveButton}></ModalButton>  
