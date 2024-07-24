@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {View, Alert, Modal, Text, Pressable, TextInput, Platform, StyleSheet} from 'react-native';
+import Checkbox from 'expo-checkbox';
 import { useGlobalState } from '../../utils/GlobalStateProvider';
 import { useModal } from '../../utils/ModalProvider';
 import Logo from '../../assets/LogoAlpaca';
@@ -26,38 +27,57 @@ const userAlpacaModal = () => {
     const { state, setActiveTradingAccount } = useGlobalState();
     const { isModalOpen, closeModal } = useModal();
     const [apiKey , setApiKey] = useState("");
-    const [apiSecretKey , useApiSecretKey] = useState("");
+    const [apiSecretKey , setApiSecretKey] = useState("");
+    const [isChecked, setChecked] = useState(false);
+    const [errorMessage , setErrorMessage] = useState<String | null>(null);
+
+
+    const isValidForm = () => {
+        if(apiKey.length ===  0 || apiSecretKey.length === 0) {
+            setErrorMessage("Alpaca's api account Key and secret are required.");
+            return false;
+        } else {
+            setErrorMessage(null);
+            return true;
+        }
+    }
 
     const handleSaveButton = async () => {
         
-        const data = {
-            key: apiKey,
-            secret: apiSecretKey
-        };
-        await apiClient.post(authorization_endpoint, data)
-        .then(response => {
-            if(response.status === 200) {
-                console.log(response.data);
-                setApiKey("");
-                useApiSecretKey("");
-                closeModal();
-                setActiveTradingAccount(!state.activeTradingAccount);
-            }
-        }).catch(error => {
-            if (error.response) {           // The server responded with a status code outside the 2xx range
-                console.log('Error response:', error.response.status);
-            } else if (error.request) {     // The request was made but no response was received
-                console.log('Error request:', error.request.status);
-            } else {                        // Something happened in setting up the request that triggered an error
-                console.log('Error message:', error.message);
-            }
-        });
-        
+        if(isValidForm()) {
+            const data = {
+                key: apiKey,
+                secret: apiSecretKey,
+                paperAccount: isChecked
+            };
+            await apiClient.post(authorization_endpoint, data)
+            .then(response => {
+                if(response.status === 200) {
+                    console.log(response.data);
+                    setApiKey("");
+                    setApiSecretKey("");
+                    closeModal();
+                    setActiveTradingAccount(!state.activeTradingAccount);
+                }
+            }).catch(error => {
+                if (error.response) {           // The server responded with a status code outside the 2xx range
+                    console.log('Error response:', error.response.status);
+                } else if (error.request) {     // The request was made but no response was received
+                    console.log('Error request:', error.request.status);
+                } else {                        // Something happened in setting up the request that triggered an error
+                    console.log('Error message:', error.message);
+                }
+            });
+            
+        }
+       
     };
 
     const handleCancelButton = async () => {
         setApiKey("");
-        useApiSecretKey("");
+        setApiSecretKey("");
+        setChecked(false);
+        setErrorMessage(null);
         closeModal(); 
     };
 
@@ -80,13 +100,20 @@ const userAlpacaModal = () => {
                     
                     <View>
                         <TextInput style={styles.textInput} placeholder="YOUR_API_KEY_ID" placeholderTextColor="#71717a" onChangeText={setApiKey} />    
-                        <TextInput style={styles.textInput} placeholder="YOUR_API_SECRET_KEY" placeholderTextColor="#71717a" onChangeText={useApiSecretKey} />
+                        <TextInput style={styles.textInput} placeholder="YOUR_API_SECRET_KEY" placeholderTextColor="#71717a" onChangeText={setApiSecretKey} />
+                        <View style={styles.checkboxView}>
+                            <Checkbox value={isChecked} onValueChange={setChecked}  color={isChecked ? '#4630EB' : undefined} />
+                            <Text> Paper trading account </Text>
+                        </View>
                     </View>
+
+                    
                     
 
                     <View style={styles.modalButtonView}>
                         <ModalButton title ="save" onPress={handleSaveButton}></ModalButton>  
                         <ModalButton title ="cancel" onPress={handleCancelButton}></ModalButton>
+                        {errorMessage &&  <Text  style={styles.errorTextStyle}>{errorMessage}</Text>}
                     </View>
                 </View>
             </View>
@@ -150,6 +177,17 @@ const userAlpacaModal = () => {
       fontWeight: 'bold',
       textAlign: 'center',
     },
+    checkboxView: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: 5,
+        marginLeft: 8,  
+    },
+
+    errorTextStyle: {
+        color: '#DC2626',
+        textAlign: 'center',
+    }
 
   });
   
