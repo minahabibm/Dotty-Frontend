@@ -1,9 +1,10 @@
 import { ReactNode } from "react";
+import { User } from './User';
 
 export interface AuthState {
     isLoading: boolean;
     isSignout: boolean;
-    user: any;
+    user: User;
 }
 
 export interface TokenParams {

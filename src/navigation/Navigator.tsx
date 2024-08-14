@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import CustomDrawer from '../components/CustomDrawer';
 import { useAuthContext } from '../utils/AuthProvider';
-import Storage from '../utils/Storage';
+import UserProvider from '../utils/UserProvider';
 import SplashScreen from '../screens/SplashScreen';
 import UserSignIn from  '../screens/UserSignIn';
 import HomeScreen from '../screens/Home';
@@ -19,7 +19,7 @@ function NavigationStack() {
   const {state, restoreUser } = useAuthContext();
   
   useEffect(() => {
-    Storage.getSecureItem("user").then(
+    UserProvider.getUser().then(
       async (value: any) => {
         // await new Promise(resolve => setTimeout(resolve, 2000));
         restoreUser(value);
@@ -32,7 +32,7 @@ function NavigationStack() {
 
   return (
     <Stack.Navigator
-      drawerContent={(props) =>   <CustomDrawer {...props} />}
+      drawerContent={(props) =>   <CustomDrawer {...props}  user={state.user}/>}
       initialRouteName="Home"
     >
       {!state.user ? (

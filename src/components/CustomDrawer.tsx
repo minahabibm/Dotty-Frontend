@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import {
     View,
     Text,
@@ -12,9 +12,11 @@ import {
   } from "react-native";
 import { DrawerContentScrollView, DrawerItemList } from "@react-navigation/drawer";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import SignOut from './SignOut.web'
-  
+import SignOut from './SignOut.web';
+
 export default function CustomDrawer(props: any) {
+  const { user } = props;
+
   return (
     <View style={{ flex: 1 }}>
       <DrawerContentScrollView
@@ -27,10 +29,10 @@ export default function CustomDrawer(props: any) {
         >
           <Image
             alt="Not find"
-            source={require('../assets/90daf0bc56f0665d.png')}
+            source={{uri: user?.picture}}
             style={styles.userAvatar}
           />
-          <Text style={styles.userText}> Name </Text>
+          <Text style={styles.userText}> {user?.name.split(" ")[0]} </Text>
         </ImageBackground>
 
         <View style={styles.drawerItemList}>
@@ -100,7 +102,7 @@ const styles = StyleSheet.create({
   },
   userText: {
     color: "#fff",
-    fontSize: 18,
+    fontSize: 22,
     marginBottom: 5,
   },
   drawerItemList : { 
