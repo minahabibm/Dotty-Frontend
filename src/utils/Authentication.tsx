@@ -9,14 +9,14 @@ import { ScreenNavigationProp } from '../types/Navigation';
 import UserProvider from './UserProvider';
 import { useAuthContext } from './AuthProvider';
 import { 
-  AUHT0_CLIENT_ID as clientId, 
-  AUHT0_CLIENT_SECRET  as clientSecret, 
-  AUHT0_DISCOVERY_URI as authUrl, 
-  AUHT0_REFRESH_URI as refreshUrl, 
-  AUHT0_SIGNOUT_URI 
+  AUTH0_CLIENT_ID as clientId, 
+  AUTH0_CLIENT_SECRET  as clientSecret, 
+  AUTH0_DISCOVERY_URI as authUrl, 
+  AUTH0_REFRESH_URI as refreshUrl, 
+  AUTH0_SIGNOUT_URI 
 } from '@env';
 
-let urlWithHeaders = AUHT0_SIGNOUT_URI;
+let urlWithHeaders = AUTH0_SIGNOUT_URI;
 const redirectUri = AuthSession.makeRedirectUri();
 
 
@@ -129,7 +129,7 @@ export const useAuthActions = () => {
             }})
         .finally(() => {
           signOut();
-          urlWithHeaders = AUHT0_SIGNOUT_URI;
+          urlWithHeaders = AUTH0_SIGNOUT_URI;
           navigation.dispatch(DrawerActions.closeDrawer());
         })
     }
