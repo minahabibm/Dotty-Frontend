@@ -1,15 +1,15 @@
-import * as React from 'react';
+import * as React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { useAuthActions } from '../utils/Authentication';
+import { useAuthActions } from "../utils/Authentication";
 
 export default function SignOut() {
-  const {handleAuthenticationLoginOut} = useAuthActions();
+  const { handleAuthenticationLogout } = useAuthActions();
   return (
-    <TouchableOpacity 
+    <TouchableOpacity
       style={styles.signOutButton}
       onPress={() => {
-        handleAuthenticationLoginOut()
+        handleAuthenticationLogout();
       }}
     >
       <View style={styles.signOutView}>
@@ -17,19 +17,19 @@ export default function SignOut() {
         <Text style={styles.signOutText}> Sign Out </Text>
       </View>
     </TouchableOpacity>
-  )    
+  );
 }
 
 const styles = StyleSheet.create({
-  signOutButton: { 
-    paddingVertical: 15 
+  signOutButton: {
+    paddingVertical: 15,
   },
-  signOutView: { 
-    flexDirection: "row", 
-    alignItems: "center" 
+  signOutView: {
+    flexDirection: "row",
+    alignItems: "center",
   },
   signOutText: {
     fontSize: 15,
     marginLeft: 5,
-  }
+  },
 });

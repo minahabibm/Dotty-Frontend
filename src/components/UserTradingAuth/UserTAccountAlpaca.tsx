@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import {StyleSheet, Text, Pressable} from 'react-native';
-import { useModal } from '../../utils/ModalProvider';
-import Logo from '../../assets/LogoAlpaca';
-import UserAlpacaModal from './AlpacaModal';
+import React, { useState } from "react";
+import { StyleSheet, Text, Pressable } from "react-native";
+import { useModal } from "../../utils/ModalProvider";
+import Logo from "../../assets/LogoAlpaca";
+import UserAlpacaModal from "./AlpacaModal";
 
 export default function App() {
   const title = "Sign In";
@@ -11,10 +11,10 @@ export default function App() {
   React.useEffect(() => {}, []);
 
   return (
-    <Pressable 
+    <Pressable
       style={({ pressed }) => [
-        pressed ? { opacity: 0.25 } : {opacity: 1},
-        styles.button
+        pressed ? { opacity: 0.25 } : { opacity: 1 },
+        styles.button,
       ]}
       onPress={() => openModal()}
     >
@@ -27,22 +27,22 @@ export default function App() {
 
 const styles = StyleSheet.create({
   button: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
     paddingVertical: 1,
     paddingHorizontal: 15,
     borderRadius: 4,
     elevation: 5,
-    backgroundColor: '#FFD746',
-    margin: 5
+    backgroundColor: "#FFD746",
+    margin: 5,
   },
   text: {
     fontSize: 16,
     lineHeight: 21,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     letterSpacing: 0.25,
-    color: 'white',
-    marginLeft: 10
+    color: "white",
+    marginLeft: 10,
   },
 });

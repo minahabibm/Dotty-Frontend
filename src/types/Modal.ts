@@ -1,11 +1,10 @@
-
-import { ReactNode } from 'react';
+import { ReactNode } from "react";
 
 export interface ModalContextType {
-    isModalOpen: boolean;
-    openModal: () => void;
-    closeModal: () => void;
+  isModalOpen: boolean;
+  openModal: () => void;
+  closeModal: () => void;
 }
 export interface ModalProviderProps {
-    children: ReactNode;
+  children: ReactNode;
 }

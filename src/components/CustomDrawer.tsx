@@ -1,18 +1,21 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 import {
-    View,
-    Text,
-    ImageBackground,
-    Image,
-    TouchableOpacity,
-    StyleSheet,
-    Switch,
-    ScrollView,
-    ScrollViewProps,
-  } from "react-native";
-import { DrawerContentScrollView, DrawerItemList } from "@react-navigation/drawer";
+  View,
+  Text,
+  ImageBackground,
+  Image,
+  TouchableOpacity,
+  StyleSheet,
+  Switch,
+  ScrollView,
+  ScrollViewProps,
+} from "react-native";
+import {
+  DrawerContentScrollView,
+  DrawerItemList,
+} from "@react-navigation/drawer";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import SignOut from './SignOut.web';
+import SignOut from "./SignOut.web";
 
 export default function CustomDrawer(props: any) {
   const { user } = props;
@@ -25,11 +28,11 @@ export default function CustomDrawer(props: any) {
       >
         <ImageBackground
           source={require("../assets/background.png")}
-          style={{ padding: 25}}
+          style={{ padding: 25 }}
         >
           <Image
             alt="Not find"
-            source={{uri: user?.picture}}
+            source={{ uri: user?.picture }}
             style={styles.userAvatar}
           />
           <Text style={styles.userText}> {user?.name.split(" ")[0]} </Text>
@@ -64,23 +67,20 @@ export default function CustomDrawer(props: any) {
           </Text>
         </View>
       </View> */}
-      
+
       <View style={styles.userActions}>
         <TouchableOpacity onPress={() => {}} style={styles.shareButton}>
           <View style={styles.shareView}>
             <Ionicons name="share-social-outline" size={22} />
-            <Text style={styles.shareText} > Tell a Friend </Text>
+            <Text style={styles.shareText}> Tell a Friend </Text>
           </View>
         </TouchableOpacity>
 
         <SignOut />
       </View>
-    
     </View>
   );
-};
-
-
+}
 
 const styles = StyleSheet.create({
   contentContainerStyle: {
@@ -98,17 +98,17 @@ const styles = StyleSheet.create({
     marginTop: 30,
     backgroundColor: "#FFBF00",
     borderWidth: 1,
-    borderColor: "#6495ED"
+    borderColor: "#6495ED",
   },
   userText: {
     color: "#fff",
     fontSize: 22,
     marginBottom: 5,
   },
-  drawerItemList : { 
-    flex: 1, 
-    backgroundColor: "#fff", 
-    paddingTop: 10 
+  drawerItemList: {
+    flex: 1,
+    backgroundColor: "#fff",
+    paddingTop: 10,
   },
   // switchTextContainer: {
   //   flexDirection: "row",
@@ -129,21 +129,20 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     fontWeight: "bold",
   },
-  userActions: { 
-    padding: 20, 
-    borderTopWidth: 1, 
-    borderTopColor: "#ccc" 
+  userActions: {
+    padding: 20,
+    borderTopWidth: 1,
+    borderTopColor: "#ccc",
   },
-  shareButton: { 
-    paddingVertical: 15 
+  shareButton: {
+    paddingVertical: 15,
   },
-  shareView: { 
-    flexDirection: "row", 
-    alignItems: "center" 
+  shareView: {
+    flexDirection: "row",
+    alignItems: "center",
   },
   shareText: {
     fontSize: 15,
     marginLeft: 5,
-  }
+  },
 });
-  

@@ -1,6 +1,6 @@
-import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import NavigationStack from './src/navigation';
+import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import NavigationStack from "./src/navigation";
 
 // TODO Notification
 // TODO Websocket close

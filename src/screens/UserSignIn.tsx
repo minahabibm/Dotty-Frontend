@@ -1,11 +1,11 @@
-import React from 'react';
-import { StyleSheet, View } from 'react-native';
-import SignInWeb from '../components/SignIn.web';
+import React from "react";
+import { StyleSheet, View } from "react-native";
+import SignInWeb from "../components/SignIn.web";
 
 export default function UserSignIn() {
   return (
     <View style={styles.container}>
-      <SignInWeb /> 
+      <SignInWeb />
     </View>
   );
 }
@@ -13,8 +13,8 @@ export default function UserSignIn() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#fff',
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#fff",
   },
 });

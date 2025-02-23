@@ -1,12 +1,7 @@
-import * as React from "react"
-import Svg, { SvgProps, Rect, G, Path, Defs, ClipPath } from "react-native-svg"
+import * as React from "react";
+import Svg, { SvgProps, Rect, G, Path, Defs, ClipPath } from "react-native-svg";
 const SvgComponent = (props: SvgProps) => (
-  <Svg
-    width={175}
-    height={40}
-    fill="none"
-    {...props}
-  >
+  <Svg width={175} height={40} fill="none" {...props}>
     <Rect width={175} height={40} fill="#F2F2F2" rx={4} />
     <G clipPath="url(#a)">
       <Path
@@ -36,5 +31,5 @@ const SvgComponent = (props: SvgProps) => (
       </ClipPath>
     </Defs>
   </Svg>
-)
-export default SvgComponent
+);
+export default SvgComponent;

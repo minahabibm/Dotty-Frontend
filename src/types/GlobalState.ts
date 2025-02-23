@@ -1,15 +1,14 @@
-
-import { ReactNode } from 'react';
+import { ReactNode } from "react";
 
 export interface GlobalState {
-    activeTradingAccount: boolean;
+  activeTradingAccount: boolean;
 }
 
 export interface GlobalContextType {
-    state: GlobalState;
-    setActiveTradingAccount: (value: boolean) => void;
+  state: GlobalState;
+  setActiveTradingAccount: (value: boolean) => void;
 }
 
 export interface GlobalStateProviderProps {
-    children: ReactNode;
+  children: ReactNode;
 }

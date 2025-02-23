@@ -1,27 +1,26 @@
-import React, { createContext, useContext, useReducer, useMemo } from 'react';
-import { AuthContextType, AuthProviderProps  } from '../types/Authentication';
-
+import React, { createContext, useContext, useReducer, useMemo } from "react";
+import { AuthContextType, AuthProviderProps } from "../types/Authentication";
 
 const initialState = {
   isLoading: true,
   isSignout: false,
   user: null,
 };
-const authReducer =  (prevState: any, action: { type: any; user: any; }) => {
+const authReducer = (prevState: any, action: { type: any; user: any }) => {
   switch (action.type) {
-    case 'RESTORE_USER':
+    case "RESTORE_USER":
       return {
         ...prevState,
         user: action.user,
         isLoading: false,
       };
-    case 'SIGN_IN':
+    case "SIGN_IN":
       return {
         ...prevState,
         isSignout: false,
         user: action.user,
       };
-    case 'SIGN_OUT':
+    case "SIGN_OUT":
       return {
         ...prevState,
         isSignout: true,
@@ -38,29 +37,27 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     () => ({
       state,
       restoreUser: (data: any) => {
-        dispatch({ type: 'RESTORE_USER', user: data})
+        dispatch({ type: "RESTORE_USER", user: data });
       },
-      signIn: async (data: any) => { 
-        dispatch({ type: 'SIGN_IN', user: data });
+      signIn: async (data: any) => {
+        dispatch({ type: "SIGN_IN", user: data });
       },
       signOut: () => {
-        dispatch({ type: 'SIGN_OUT', user: null })
-      }
+        dispatch({ type: "SIGN_OUT", user: null });
+      },
     }),
-    [state]
-  );  
+    [state],
+  );
 
   return (
-    <AuthContext.Provider value={authContext}>
-      {children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={authContext}>{children}</AuthContext.Provider>
   );
 };
 
 const useAuthContext = (): AuthContextType => {
   const context = useContext(AuthContext);
   if (context === undefined) {
-    throw new Error('useAuthContext must be used within an AuthProvider');
+    throw new Error("useAuthContext must be used within an AuthProvider");
   }
   return context;
 };

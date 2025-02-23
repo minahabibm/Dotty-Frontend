@@ -1,28 +1,28 @@
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
-import { getAccessToken } from './Authentication';
-import { DOTTY_BASE_URL as baseURL } from '@env';
+import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
+import { getAccessToken } from "./Authentication";
+import { DOTTY_BASE_URL as baseURL } from "@env";
 
 // TODO Reroute user to login page for 401 error.
 const apiClient = axios.create({
   baseURL: baseURL, // Your API base URL
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
 });
 
 // Add a request interceptor
 apiClient.interceptors.request.use(
-    async (config: AxiosRequestConfig | any) => {
-        const accessToken = await getAccessToken();
-        if (accessToken && config.headers) {
-            config.headers['Authorization'] = `Bearer ${accessToken}`;
-        }
-        return config;
-    },
-    (error) => {
-        console.error('Request Error', error);
-        return Promise.reject(error);
+  async (config: AxiosRequestConfig | any) => {
+    const accessToken = await getAccessToken();
+    if (accessToken && config.headers) {
+      config.headers["Authorization"] = `Bearer ${accessToken}`;
     }
+    return config;
+  },
+  (error) => {
+    console.error("Request Error", error);
+    return Promise.reject(error);
+  },
 );
 
 // Add a response interceptor
@@ -38,21 +38,39 @@ apiClient.interceptors.response.use(
   },
   async (error) => {
     // Log response error
-    console.error('Response Error', {
+    if (error.response) {
+      // Server responded with an error status code (e.g., 4xx or 5xx)
+      console.error("Error Response:", {
+        status: error.response.status,
+        data: error.response.data,
+      });
+    } else if (error.request) {
+      // No response was received from the server
+      console.error("No Response from Server:", {
+        request: error.request,
+      });
+    } else {
+      // Error occurred while setting up the request
+      console.error("Axios Error Setup:", {
+        error: error.message,
+      });
+    }
+
+    // Log the exception details (common to all cases)
+    console.error("Exception Details:", {
       message: error.message,
       config: error.config,
       response: error.response,
     });
-    const originalRequest = error.config;
 
     return Promise.reject(error);
-  }
+  },
 );
 
 export default apiClient;
 
-
 // if (error.response.status === 401 && !originalRequest._retry) {
+//   const originalRequest = error.config;
 //   originalRequest._retry = true;
 //   const refreshToken = localStorage.getItem('refreshToken');
 //   if (refreshToken) {

@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { Platform, View, StyleSheet, Animated, Easing } from 'react-native';
-import { WebSocketIndicatorProps } from '../../types/WebSockets';
+import React, { useState, useEffect } from "react";
+import { Platform, View, StyleSheet, Animated, Easing } from "react-native";
+import { WebSocketIndicatorProps } from "../../types/WebSockets";
 
-
-export default function WebSocketIndicator({ websocket } : WebSocketIndicatorProps) {
+export default function WebSocketIndicator({
+  websocket,
+}: WebSocketIndicatorProps) {
   const [animatedValue] = useState(new Animated.Value(0));
-
 
   const indicatorColor = animatedValue.interpolate({
     inputRange: [0, 1],
-    outputRange: ['#FF073A', '#39FF14'],
+    outputRange: ["#FF073A", "#39FF14"],
   });
 
   const animateIndicator = (connected: boolean) => {
@@ -22,31 +22,28 @@ export default function WebSocketIndicator({ websocket } : WebSocketIndicatorPro
   };
 
   useEffect(() => {
-    if(websocket?.OPEN) {
+    if (websocket?.OPEN) {
       animateIndicator(true);
     } else {
       animateIndicator(false);
     }
   }, [websocket]);
 
- return (
+  return (
     <View style={styles.container}>
       <Animated.View
-        style={[
-          styles.circle, 
-          { backgroundColor: indicatorColor },
-        ]}
+        style={[styles.circle, { backgroundColor: indicatorColor }]}
       />
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
-    position: 'absolute',
+    position: "absolute",
     top: 5,
-    right: Platform.OS === 'web' ? 16 : 6,
-    zIndex: 10
+    right: Platform.OS === "web" ? 16 : 6,
+    zIndex: 10,
   },
   circle: {
     width: 15,
